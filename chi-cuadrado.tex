@@ -35,7 +35,7 @@
 \usepackage{enumitem}
 
 % Imágenes
-\usepackage{graphicx} 
+\usepackage{graphicx}
 
 \usepackage{amsmath}
 % para importar svg
@@ -138,7 +138,7 @@ La distribución de Poisson expresa a partir de una frecuencia de ocurrencia med
 
 La distribución de Poisson es un caso particular del limite de la distribución binomial, podemos deducirlo de la siguiente representación geométrica:\\
 \begin{center}
-\includegraphics[scale=0.6]{1.png} 
+%\includegraphics[scale=0.6]{1.png} 
 \end{center}
 Tomamos $AB$ como el segmento de longitud $L$ y $CD$ el segmento de longitud $l$ contenido en $AB$, la probabilidad de que un punto se encuentre en $CD$ es $l/L$. Si tomamos n puntos aleatorios en $AB$ la probabilidad de que exactamente $x$ de ellos esten en $CD$ viene dada por una distribución binomial:
 $$B(x|\frac{l}{L},n)=\frac{n!}{x!(n-x)!}(\frac{l}{L})^x(1-\frac{l}{L})^{n-x}$$
@@ -200,7 +200,7 @@ Sean n experimentos $x=(x_1,...x_n)$ independientes que siguen una distribución
 $$Var(\hat{\theta})=\frac{1}{nI(\theta)}$$
 Se verifica que la varianza del estimador alcanza la cota de Cramér-Rao.\\
 \textbf{Demostración}:
-Calculamos la función información de Fisher para ello en primer lugar veamos cual es el valor del logaritmo de la función de densidad: 
+Calculamos la función información de Fisher para ello en primer lugar veamos cual es el valor del logaritmo de la función de densidad:
 $$log(f(x|\theta))=-\theta + xlog(\theta) -log(x!)$$
 Derivamos y elevamos al cuadrado previamente para el cálculo de la información de Fisher:
 $$(\frac{\partial}{\partial\theta}log(f(x|\theta)))^2=(\frac{x-\theta}{\theta})^2$$
@@ -238,7 +238,7 @@ $$f(x_1...x_n | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{\sum
 Donde vemos que hemos conseguido factorizar $f(x_1...x_n | \theta)$ como en el teorema; en nuestro caso $u(X) = T(X) = \sum_{i=1}^n x_i$ y $h(X) =  \frac{1}{\prod_{i=1}^nx_i!}$\\
 Para finalizar conviene resaltar que hemos probado que el estadístico $T(X)$ es suficiente para $\theta$, pero nosotros lo que queremos es ver que $\hat{\theta}$ es suficiente para $\theta$.\\
 Pero esto es trivial ya que $\hat{\theta} = \frac{1}{n}\sum_{i=1}^n x_i= \frac{1}{n}T(X)$ y podemos encontrar una nueva función $\hat u(x_1,...,x_n)$ tal que:
-$$f(x_1...x_n | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{n\frac{\sum_{i=1}^nx_i}{n}} \frac{1}{\prod_{i=1}^nx_i!}$$ 
+$$f(x_1...x_n | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{n\frac{\sum_{i=1}^nx_i}{n}} \frac{1}{\prod_{i=1}^nx_i!}$$
 Que cumple el esquema: \\
 $$ f(x_1,...,x_n| \theta) = \Phi(u(\hat\theta) | \theta)\cdot h(x_1, ..., x_n) $$
 
@@ -254,7 +254,7 @@ Y $h(x_1, ..., x_n) = \frac{1}{\prod_{i=1}^nx_i!}$
 La probabilidad de que $x$ partículas se emitan en un periodo de dos minutos se puede modelar mediante una función de distribución de Poisson:
 $$ P_{\mu}(x) =\frac{\mu^x}{x!}e^{-\mu} $$
 Donde $\mu$ es el valor promedio de particulas emitido en dos minutos.\\
-En nuestro caso $\mu = 1.5\cdot2 = 3$ 
+En nuestro caso $\mu = 1.5\cdot2 = 3$
 Calculemos ahora $P_{\mu}(i)$ para $i=0,1,2,3,4$\\
 $$P_{\mu}(0) = \frac{3^0}{0!}e^{-3} = e^{-3} = 0.05 $$
 $$P_{\mu}(1) = \frac{3^1}{1!}e^{-3} = 3e^{-3} = 0.15 $$

@@ -10,3 +10,5 @@
 *.dvi
 
 *.aux
+
+.fuse*
