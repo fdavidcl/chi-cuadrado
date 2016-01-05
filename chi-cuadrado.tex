@@ -86,7 +86,7 @@
 \makeatletter
 \renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
-\newcommand{\imagen}[2]{\begin{center} \includegraphics[width=90mm]{#1} \\#2 \end{center}}
+\newcommand{\figura}[2]{\begin{figure}\centering \includegraphics[width=90mm]{#1} \caption{#2} \end{figure}}
 
 \renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
 \begin{center} % Center align
@@ -134,7 +134,8 @@ David Charte} % Author
 \setcounter{page}{1}
 \pagebreak
 
-\section{Deducción de función de densidad}
+\section{Definición}
+\subsection{Función de densidad}
 La distribución $\chi$-cuadrado es un caso particular de la distribución Gamma. Recordamos la función de densidad de esta distribución:
 
 \begin{definition}[Distribución Gamma]
@@ -142,13 +143,15 @@ La distribución $\chi$-cuadrado es un caso particular de la distribución Gamma
   $$f(x\mid \alpha, \beta) = \frac 1 {\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-\frac x \beta},\quad x\in[0,+\infty[,\quad \alpha,\beta>0~.$$
 \end{definition}
 
-Ahora, si $2\alpha$ es un natural, llamamos $p=2\alpha$ y evaluamos en $\beta=2$, nos queda la siguiente expresión:
+Ahora, si $2\alpha$ es un natural, llamamos $p=2\alpha$ (los grados de libertad) y evaluamos en $\beta=2$, nos queda la siguiente expresión:
 $$\frac 1 {\Gamma(\frac p 2)2^{\frac p 2}}x^{\frac p 2-1}e^{-\frac x 2}~.$$
 
 \begin{definition}[Distribución $\chi$-cuadrado]
   Decimos que la variable aleatoria $X$ sigue una distribución $\chi$-cuadrado si su función de densidad es:
   $$f(x\mid p) = \frac 1 {\Gamma(\frac p 2)2^{\frac p 2}}x^{\frac p 2-1}e^{-\frac x 2},\quad x\in[0,+\infty[,\quad p\in\{1,2,\dots\}~.$$
 \end{definition}
+
+\figura{pdf.png}{Función de densidad de la distribución $\chi$-cuadrado. Imagen de Wikipedia (CC BY).}
 
 \subsection{Propiedades}
 
