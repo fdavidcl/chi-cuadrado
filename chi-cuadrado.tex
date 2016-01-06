@@ -86,7 +86,7 @@
 \makeatletter
 \renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
-\newcommand{\figura}[2]{\begin{figure}\centering \includegraphics[width=90mm]{#1} \caption{#2} \end{figure}}
+\newcommand{\figura}[2]{\begin{figure}[hbtp]\centering \includegraphics[width=90mm]{#1} \caption{#2} \end{figure}}
 
 \renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
 \begin{center} % Center align
@@ -120,8 +120,8 @@ David Charte} % Author
 
 %----------------------------------------------------------------------------------------
 %\setcounter{secnumdepth}{3}
-%\usepackage{anysize}
-%\marginsize{3cm}{3cm}{2.5cm}{2.5cm}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{2.5cm}{2.5cm}
 
 \newtheorem{theorem}{Teorema}[section]
 \newtheorem{definition}{Definición}[section]
@@ -135,19 +135,60 @@ David Charte} % Author
 \pagebreak
 
 \section{Definición}
+
+La distribución $\chi$-cuadrado se puede definir como la suma de cuadrados de variables aleatorias siguiendo distribuciones normales 0-1:
+
+\begin{definition}[Distribución $\chi$-cuadrado]
+  Si $X_1,X_2,\dots X_p$ son variables aleatorias independientes con distribución $N(0,1)$, entonces a la distribución que sigue $\chi^2=X_1^2+X_2^2+\dots X_p^2$ la llamamos $\chi$-cuadrado con $p$ grados de libertad.
+\end{definition}
+
 \subsection{Función de densidad}
-La distribución $\chi$-cuadrado es un caso particular de la distribución Gamma. Recordamos la función de densidad de esta distribución:
+Probaremos que la distribución $\chi$-cuadrado es un caso particular de la distribución Gamma. Recordamos la función de densidad de esta distribución:
 
 \begin{definition}[Distribución Gamma]
   Decimos que la variable aleatoria $X$ sigue una distribución Gamma si su función de densidad es:
   $$f(x\mid \alpha, \beta) = \frac 1 {\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-\frac x \beta},\quad x\in[0,+\infty[,\quad \alpha,\beta>0~.$$
 \end{definition}
 
-Ahora, si $2\alpha$ es un natural, llamamos $p=2\alpha$ (los grados de libertad) y evaluamos en $\beta=2$, nos queda la siguiente expresión:
-$$\frac 1 {\Gamma(\frac p 2)2^{\frac p 2}}x^{\frac p 2-1}e^{-\frac x 2}~.$$
+Recordamos además el siguiente teorema:
+\begin{theorem}
+  Sean X e Y variables aleatorias \textbf{continuas} con funciones generatrices de momentos $M_X(t)$ y $M_Y(t)$ respectivamente. Además, supongamos que las funciones \textbf{existen} para $t$ en un entorno de 0 y que son continuas en $t=0$. Entonces, si $M_X(t)=M_Y(t)~\forall t$ las variables aleatorias tienen la misma función de densidad.
+\end{theorem}
 
+Sea $\chi^2=X_1^2+X_2^2+\dots X_p^2$ una variable aleatoria con distribución $\chi$-cuadrado, y sea $Y$ una variable aleatoria siguiendo una distribución $\Gamma(\alpha, \beta)$. Calculamos las funciones generatrices de momentos. Por un lado, la de $\chi^2$ se expresará como:
+\begin{align*}
+  M_{\chi^2}(t)
+  &=E\left[e^{t\chi^2}\right]=E\left[e^{t(X_1^2+X_2^2+\dots+X_p^2)}\right]\\
+  &=E\left[e^{tX_1^2}\right]E\left[e^{tX_2^2}\right]\dots E\left[e^{tX_p^2}\right]
+    =E\left[e^{tX_1^2}\right]^p
+\end{align*}
+puesto que las normales son independientes. Calculamos ahora $E\left[e^{tX_1^2}\right]$:
+\begin{align*}
+  E\left[e^{tX_1^2}\right]
+  &=\int_{-\infty}^\infty e^{x^2t}\frac{e^{-x^2/2}}{\sqrt{2\pi}} dx
+   =\int_{-\infty}^\infty\frac{\mathrm{exp}\left(-\frac{x^2}{2(1-2t)^{-1}}\right)}{\sqrt{2\pi}} dx\\
+  &=\frac 1 {\sqrt{1-2t}}
+    \int_{-\infty}^\infty\frac{\mathrm{exp}\left(-\frac{x^2}{2(1-2t)^{-1}}\right)}{\sqrt{(1-2t)^{-1}}\sqrt{2\pi}} dx\\
+  &\left[\textit{La integral vale 1 por ser la función de densidad de }N(0,(1-2t)^{-1})\textit{ en su dominio}\right]\\
+  &=\frac 1 {\sqrt{1-2t}}
+\end{align*}
+
+Ahora calculamos la función generatriz de momentos de la variable $Y$:
+\begin{align*}
+  M_Y(t)&=E\left[e^{tY}\right]=\int_0^\infty e^{ty} \frac 1 {\Gamma(\alpha)\beta^\alpha}y^{\alpha-1}e^{-\frac y \beta} dy\\
+  &=\int_0^\infty \frac{\left(\frac 1 \beta\right)^\alpha y^{\alpha-1}e^{-y\left(\frac 1 \beta - t\right)}}{\Gamma(\alpha)} dy\\
+  &= \left(\frac{\frac 1 \beta}{\frac 1 \beta - t}\right)^\alpha\frac 1 {\Gamma(\alpha)}
+     \int_0^\infty \left(\frac 1 \beta - t\right)\left(\left(\frac 1 \beta - t\right)y\right)^{\alpha-1}e^{-y\left(\frac 1 \beta - t\right)} dy\\
+  \left[z=\left(\frac 1 \beta - t\right)y\right] &= \left(\frac{\frac 1 \beta}{\frac 1 \beta - t}\right)^\alpha\frac 1 {\Gamma(\alpha)}
+     \int_0^\infty z^{\alpha-1}e^{-z} dz=
+     \left(\frac{\frac 1 \beta}{\frac 1 \beta - t}\right)^\alpha=\frac 1 {(1 -\beta t)^\alpha}
+\end{align*}
+
+Si evaluamos la expresión obtenida en $\alpha=\frac p 2,~\beta=2$ obtenemos el mismo resultado que en la función que nos da la distribución $\chi$-cuadrado. Por tanto, la variable $\chi^2$ se distribuye según una $\Gamma(\frac p 2, 2)=:\chi^2(p)$.
+
+Obtenemos de esta forma la siguiente definición equivalente de la distribución $\chi$-cuadrado:
 \begin{definition}[Distribución $\chi$-cuadrado]
-  Decimos que la variable aleatoria $X$ sigue una distribución $\chi$-cuadrado si su función de densidad es:
+  Decimos que la variable aleatoria $X$ sigue una distribución $\chi$-cuadrado con $p$ grados de libertad si su función de densidad es:
   $$f(x\mid p) = \frac 1 {\Gamma(\frac p 2)2^{\frac p 2}}x^{\frac p 2-1}e^{-\frac x 2},\quad x\in[0,+\infty[,\quad p\in\{1,2,\dots\}~.$$
 \end{definition}
 
@@ -286,4 +327,12 @@ $$ f(x_1,...,x_n| \theta) = \Phi(u(x_1, ..., x_n) | \theta)\cdot h(x_1, ..., x_n
 % $$P_{\mu}(3) = \frac{3^3}{3!}e^{-3} = \frac{9}{2}e^{-3} = 0.22 $$
 % $$P_{\mu}(4) = \frac{3^4}{4!}e^{-3} = \frac{9}{2}e^{-3} = 0.17 $$
 % $$\sum_{i=5}^{+\infty}P_{\mu}(i) = \sum_{i=5}^{+\infty}\frac{3^i}{i!}e^{-3} = \sum_{i=0}^{+\infty}\frac{3^i}{i!}e^{-3} - \sum_{i=0}^{5}\frac{3^i}{i!}e^{-3} = e^3e^{-3} - \sum_{i=0}^{5}\frac{3^i}{i!}e^{-3} = 1 - 0.05 - 0.15 - 0.22 - 0.22 - 0.17 = 0.19$$
+
+\section{Referencias}
+\begin{enumerate}
+  \item Notes on the Chi-squared Distribution - Georgia Tech Institute: \url{http://people.math.gatech.edu/~ecroot/3225/chisquare.pdf}
+  \item Probability. An Introduction - Geoffrey Grimmet
+  \item Statistical Inference - George Casella, Roger Berger
+\end{enumerate}
+
 \end{document}
