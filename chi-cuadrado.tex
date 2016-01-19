@@ -215,110 +215,38 @@ $$\mathrm E[X]=p$$
 % Y por lo tanto la expresión de la varianza es la siguiente:
 $$\mathrm{Var}[X]=2p$$
 
-\section{Estimador máximo verosimil}
-% Para una muestra de tamaño $n$, que denotamos por $x=(x_1,...,x_n)$ definimos la función de verosimilitud como:
-% $$l(x_1,...,x_n|\theta)=\prod_{i=1}^{n} \frac{e^{-\theta}\theta^{x_i}}{x_i!}=e^{-n\theta}\prod_{i=1}^{n} \frac{\theta^{x_i}}{x_i!}$$
-% Para el cálculo del estimador máximo verosimil de la ley de Poisson vamos a maximizar la función $log(l(x_1,...,x_n|\theta))$ puesto que el logaritmo es creciente conserva los máximos:
-% $$L(x_1,...,x_n|\theta)=log(l(x_1,...,x_n|\theta))=-n\theta + \sum_{i=1}^{n}log(\frac{\theta^{x_i}}{x_i!})=-n\theta+ \sum_{i=1}^{n}(x_i log(\theta)-log(x_i!))$$
-% Ahora calculamos la derivada para maximizar el logaritmo de la función de verosimilitud:
-% $$\frac{\partial L}{\partial \theta}=-n+\sum_{i=1}^{n}\frac{x_i}{\theta}=-n+\frac{1}{\theta}\sum_{i=1}^{n}x_i$$
-% Encontramos el extremo igualando a 0:
-% $$-n+\frac{1}{\theta}\sum_{i=1}^{n}x_i=0 \Leftrightarrow \frac{1}{\theta}\sum_{i=1}^{n}x_i=n \Leftrightarrow \theta =\frac{\sum_{i=1}^{n}x_i}{n}$$
-% Para verificar que hemos encontrado un máximo calculamos la segunda derivada y evaluamos en $\theta =\frac{\sum_{i=1}^{n}x_i}{n}$:
-% $$\frac{\partial^2 L}{\partial \theta^2}=-\frac{1}{\theta^2}\sum_{i=1}^{n}x_i$$
-% $$\frac{\partial^2 L}{\partial \theta^2}(\frac{\sum_{i=1}^{n}x_i}{n})<0$$
-% Se tiene que la segunda derivada es negativa ya que la suma de variables $x_i$ es siempre positiva y $\theta$ está elevado al cuadrado por lo que siempre es positiva, por lo que no hay ningún valor que haga positiva la segunda derivada y por tanto $\hat{\theta}=\frac{\sum_{i=1}^{n}x_i}{n}$ es un estimador máximo verosimil para la ley de Poisson.
+\section{Inferencia}
 
-\subsection{Insesgadez}
-\begin{definition}[Insesgadez]
-Se denomina sesgo de un estimador a la diferencia entre la esperanza del estimador y el verdadero valor del parámetro a estimar. Un estimador es insesgado si su sesgo es nulo por ser su esperanza igual al parámetro que se desea estimar.
+\subsection{Información de Fisher}
+
+\begin{definition}[Información de Fisher]
+  Para una variable $X$ cuya distribución tiene función de densidad $f(x\mid \theta)$, la información de Fisher se define como
+  $$\mathrm I_X(\theta)=\mathrm E_\theta\left[\left(\frac \partial {\partial \theta} \log f(x\mid \theta)\right)^2\right]$$
 \end{definition}
 
-% Sean n experimentos $x=(x_1,...x_n)$ independientes que siguen una distribución de Poisson de parámetro $\theta$, para que el estimador $\hat{\theta}$ sea insesgado tenemos que probar que:
-% $$E[\hat{\theta}]=\theta$$
-% \begin{proof}
-% $$E[\hat{\theta}]=E[\frac{1}{n}\sum_{i=1}^{n}x_i]=\frac{1}{n}\sum_{i=1}^{n}E[x_i]=\frac{1}{n}\sum_{i=1}^{n}\theta=\frac{n\theta}{n}=\theta$$
-% \end{proof}
+Recordamos que, bajo ciertas circunstancias, la información de Fisher se puede calcular mediante la siguiente expresión:
+$$\mathrm I_X(\theta)=\mathrm E_\theta\left[-\frac {\partial^2} {\partial \theta^2} \log f(x\mid \theta)\right]$$
 
-\subsection{Eficiencia}
-\begin{definition}[Eficiencia]
-Un estimador $\hat{\theta}_1$ se dice que es más eficiente que otro estimador $\hat{\theta}_2$, si la varianza del primero es menor que la del segundo $Var(\hat{\theta}_1)<Var(\hat{\theta}_2)$.
-\end{definition}
+En el caso de la distribución $\chi$-cuadrado, calculamos primero la derivada:
+\begin{align*}
+  \frac\partial {\partial p} \log f(x\mid p)
+  &= \frac\partial {\partial p} \log\left(\frac 1 {\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-\frac x \beta}\right)
+   = \frac\partial {\partial p}\left(\left(\frac p 2 - 1\right)\log x - \frac x 2 - \log\Gamma\left(\frac p 2\right) - \frac p 2 \log 2\right)\\
+  &= \frac 1 2 \log x - \frac 1 2 \psi\left(\frac p 2\right) - \frac 1 2 \log 2 = \frac 1 2\left(\log \frac x 2 - \psi\left(\frac p 2\right)\right)
+\end{align*}
+\begin{align*}
+  \frac {\partial^2} {\partial p^2} \log f(x\mid p)
+  &= \frac\partial {\partial p} \frac 1 2\left(\log \frac x 2 - \psi\left(\frac p 2\right)\right) = -\frac 1 4 \psi'\left(\frac p 2\right)
+\end{align*}
 
-% Sean n experimentos $x=(x_1,...x_n)$ independientes que siguen una distribución de Poisson de parámetro $\theta$, para que el estimador $\hat{\theta}$ sea eficiente tenemos que probar que:
-% $$Var(\hat{\theta})=\frac{1}{nI(\theta)}$$
-% Se verifica que la varianza del estimador alcanza la cota de Cramér-Rao.
-%
-% \begin{proof}
-% Calculamos la función información de Fisher para ello en primer lugar veamos cual es el valor del logaritmo de la función de densidad:
-% $$log(f(x|\theta))=-\theta + xlog(\theta) -log(x!)$$
-% Derivamos y elevamos al cuadrado previamente para el cálculo de la información de Fisher:
-% $$(\frac{\partial}{\partial\theta}log(f(x|\theta)))^2=(\frac{x-\theta}{\theta})^2$$
-% Calculamos la esperanza de lo anterior:
-% $$I(\theta)=E[(\frac{\partial}{\partial\theta}log(f(x|\theta)))^2]=E[(\frac{x-\theta}{\theta})^2]=\frac{1}{\theta^2}E[(x-\theta)^2]=\frac{1}{\theta^2}Var(x)=\frac{\theta}{\theta^2}=\frac{1}{\theta}$$
-% Puesto que tenemos $n$ experimentos:
-% $$nI(\theta)=\frac{n}{\theta}$$
-% Calculamos la varianza del estimador para ver si coincide con la información de Fisher:
-% $$Var(\hat{\theta})=Var(\frac{\sum_{i=1}^{n}x_i}{n})=\frac{1}{n^2}Var(\sum_{i=1}^{n}x_i)=\frac{1}{n^2}\sum_{i=1}^{n}Var(x_i)=\frac{n\theta}{n^2}=\frac{\theta}{n}$$
-% Por lo que se verifica la condición de de eficiencia y el estimador es eficiente.
-% \end{proof}
-
-\subsection{Consistencia}
-\begin{theorem}
-Una condición suficiente para que $\hat{\theta}$ sea un estimador consistente es que dicho estimador tiene que verificar:
-\begin{description}
-\item $E[\hat{\theta}] \rightarrow \theta$
-\item $Var(\hat{\theta}) \rightarrow 0$
-\end{description}
-Con $n \rightarrow \infty$.
-\end{theorem}
-
-% Sean n experimentos $x=(x_1,...x_n)$ independientes que siguen una distribución de Poisson de parámetro $\theta$, el estimador $\hat{\theta}$ es consistente ya que sabemos que dicho estimador es insesgado, y conocemos al valor de la varianza del mismo:
-% $$E[\hat{\theta}]=\theta$$
-% $$Var(\hat{\theta})=\frac{\theta}{n} \rightarrow_{P_\theta} 0, \ \ \ n\rightarrow \infty$$
-
-\subsection{Suficiencia}
-
-\begin{theorem}
-Sean $X_1, X_2, ..., X_n$ variables aleatorias independientes con una función distribución de distribución conjunta $f(x_1, x_2, ..., x_n | \theta)$ que depende del parámetro $\theta$. \\
-Entonces se dice que el estadístico $u(x_1, ..., x_n)$ es suficiente para $\theta$ si y solamente si $f(x_1, x_2, ..., x_n | \theta)$ se puede factorizar de la siguiente forma: \\
-$$ f(x_1,...,x_n| \theta) = \Phi(u(x_1, ..., x_n) | \theta)\cdot h(x_1, ..., x_n) $$
-\end{theorem}
-
-% Veamos ahora que el estadístico \(T(X) =\sum_{i=1}^n x_i\) es un estadístico suficiente para el parámetro $\theta$ de la distribución de Poisson: \\
-% Consideremos en primer lugar la probabilidad conjunta de la distribución:
-% $$P(X=x) = P(X_1 = x_1, X_2 = x_2, ..., X_n = x_n) $$
-% Teniendo en cuenta que en nuestra distribución de Poisson se tiene que: \(P(X=k) = \frac{e^{-\theta }\theta ^{k}}{k!}\) y que las observaciones son independientes podemos reescribirlo como:
-% $$P(X=x) = \prod_{i=1}^nP(X_i = x_i) = \frac{e^{-\theta }\theta ^{x_1}}{x_1!}\cdot \frac{e^{-\theta }\theta ^{x_2}}{x_2!}\cdot ... \cdot \frac{e^{-\theta }\theta ^{x_n}}{x_n!}$$
-% Simplificando tenemos:
-% $$f(x_1...x_n | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{\sum_{i=1}^nx_i} \frac{1}{\prod_{i=1}^nx_i!}$$
-% Donde vemos que hemos conseguido factorizar $f(x_1...x_n | \theta)$ como en el teorema; en nuestro caso $u(X) = T(X) = \sum_{i=1}^n x_i$ y $h(X) =  \frac{1}{\prod_{i=1}^nx_i!}$\\
-% Para finalizar conviene resaltar que hemos probado que el estadístico $T(X)$ es suficiente para $\theta$, pero nosotros lo que queremos es ver que $\hat{\theta}$ es suficiente para $\theta$.\\
-% Pero esto es trivial ya que $\hat{\theta} = \frac{1}{n}\sum_{i=1}^n x_i= \frac{1}{n}T(X)$ y podemos encontrar una nueva función $\hat u(x_1,...,x_n)$ tal que:
-% $$f(x_1...x_n | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{n\frac{\sum_{i=1}^nx_i}{n}} \frac{1}{\prod_{i=1}^nx_i!}$$
-% Que cumple el esquema: \\
-% $$ f(x_1,...,x_n| \theta) = \Phi(u(\hat\theta) | \theta)\cdot h(x_1, ..., x_n) $$
-%
-% Donde: $\Phi(u(\hat\theta) | \theta) = \prod_{i=1}^nP(X_i = x_i) = e^{-n\theta }\theta ^{n\frac{\sum_{i=1}^nx_i}{n}}$ \\
-% Y $h(x_1, ..., x_n) = \frac{1}{\prod_{i=1}^nx_i!}$
-
-% \section{Ejemplos}
-% \textbf{Calcular el número de particulas $\alpha$ emitidas en una fuente radiactiva: \\
-% }Experimentalmente se obtiene que el numero medio de particulas $\alpha$ emitidas en dos minutos es 3.
-% ¿Cual es la probabilidad de que en los próximos dos minutos el número de partículas $\alpha$ sea 0, 1, 2, 3 ó 4?\\
-% ¿Y de que sea mayor o igual que cinco?\\
-% \textbf{Solución:}\\
-% La probabilidad de que $x$ partículas se emitan en un periodo de dos minutos se puede modelar mediante una función de distribución de Poisson:
-% $$ P_{\mu}(x) =\frac{\mu^x}{x!}e^{-\mu} $$
-% Donde $\mu$ es el valor promedio de particulas emitido en dos minutos.\\
-% En nuestro caso $\mu = 1.5\cdot2 = 3$
-% Calculemos ahora $P_{\mu}(i)$ para $i=0,1,2,3,4$\\
-% $$P_{\mu}(0) = \frac{3^0}{0!}e^{-3} = e^{-3} = 0.05 $$
-% $$P_{\mu}(1) = \frac{3^1}{1!}e^{-3} = 3e^{-3} = 0.15 $$
-% $$P_{\mu}(2) = \frac{3^2}{2!}e^{-3} = \frac{9}{2}e^{-3} = 0.22 $$
-% $$P_{\mu}(3) = \frac{3^3}{3!}e^{-3} = \frac{9}{2}e^{-3} = 0.22 $$
-% $$P_{\mu}(4) = \frac{3^4}{4!}e^{-3} = \frac{9}{2}e^{-3} = 0.17 $$
-% $$\sum_{i=5}^{+\infty}P_{\mu}(i) = \sum_{i=5}^{+\infty}\frac{3^i}{i!}e^{-3} = \sum_{i=0}^{+\infty}\frac{3^i}{i!}e^{-3} - \sum_{i=0}^{5}\frac{3^i}{i!}e^{-3} = e^3e^{-3} - \sum_{i=0}^{5}\frac{3^i}{i!}e^{-3} = 1 - 0.05 - 0.15 - 0.22 - 0.22 - 0.17 = 0.19$$
+Por tanto, la información de Fisher nos queda:
+\begin{align*}
+  \mathrm I_X(p)
+  &=\mathrm E_p\left[-\frac {\partial^2} {\partial p^2} \log f(x\mid p)\right] = \int \left(-\frac {\partial^2} {\partial p^2} \log f(x\mid p)\right)f(x\mid p)~\mathrm dx\\
+  &=\int \frac 1 4 \psi'\left(\frac p 2\right)f(x\mid p)~\mathrm dx
+   =\frac 1 4 \psi'\left(\frac p 2\right)\int f(x\mid p)~\mathrm dx
+   =\frac 1 4 \psi'\left(\frac p 2\right)
+\end{align*}
 
 \section{Referencias}
 \begin{enumerate}
