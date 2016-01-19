@@ -202,17 +202,19 @@ Obtenemos de esta forma la siguiente definición equivalente de la distribución
 $$M_X(t)=\left(\frac 1 {1 - 2t}\right)^{\frac p 2},\quad t<\frac 1 2$$
 
 \subsection{Esperanza}
-% Para el cálculo de la esperanza tan solo debemos derivar la función generatriz de momentos una vez y evaluarla con t=0:
-% $$\frac{\partial\phi}{\partial t} = \theta e^t e^{\theta(e^t-1)}$$
-% Evaluamos la expresión en t=0 y tenemos que:
+Para el cálculo de la esperanza derivamos la función generatriz de momentos y la evaluamos en t=0:
+$$\frac{\partial\phi}{\partial t} = \frac{p}{2} (\frac{1}{1-2t})^{\frac{p}{2}-1} \frac{2}{(1-2t)^{2}} = p (\frac{1}{(1-2t)})^{\frac{p}{2}+1} $$
+
+Una vez hallada la derivada, evaluando en t=0 tenemos que:
 $$\mathrm E[X]=p$$
 
+
 \subsection{Varianza}
-% La varianza se puede expresar como $\sigma^2=E[X^2]-E[X]^2$ por lo que es tan solo calcular el momento de orden 2 usando la función generatriz de momentos, por lo que volvemos a derivar la expresión anterior:
-% $$\frac{\partial^2\phi}{\partial t^2} = \theta e^t e^{\theta(e^t-1)}+\theta^2 e^{2t} e^{\theta(e^t-1)}$$
-% Evaluamos la expresión en t=0 y tenemos que:
-% $$E[X^2]=\theta+\theta^2$$
-% Y por lo tanto la expresión de la varianza es la siguiente:
+La varianza se puede expresar como $\sigma^2=E[X^2]-E[X]^2$ por lo que es tan solo calcular el momento de orden 2 usando la función generatriz de momentos, por lo que volvemos a derivar la expresión anterior:
+$$\frac{\partial^2\phi}{\partial t^2} = p (\frac{p}{2}+1) (\frac{1}{1-2t})^{\frac{p}{2}} (\frac{2}{(1-2t)^{2}}) = (p^2+2p) (\frac{1}{(1-2t)})^{\frac{p}{2}+2}  $$
+Evaluamos la expresión en t=0 y tenemos que:
+$$E[X^2] = (p^2+2p)$$
+Y por lo tanto la expresión de la varianza es la siguiente:
 $$\mathrm{Var}[X]=2p$$
 
 \section{Inferencia}
